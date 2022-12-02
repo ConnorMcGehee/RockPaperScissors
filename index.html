@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <script src="main.js"></script>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    <hr/>
-    <div id="display-element"></div>
-    <button onclick="displayDate()">Click Me</button>
-    <hr/>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="main.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <button id="rock" onclick="selectRock()">Rock</button>
+  <button id="paper" onclick="selectPaper()">Paper</button>
+  <button id="scissors" onclick="selectScissors()">Scissors</button><br>
+  <button id="go" onclick="go()">Go!</button>
+  <div id="hand1"></div>
+  <div id="hand2"></div>
+  <div id="result"></div>
+</body>
+
 </html>

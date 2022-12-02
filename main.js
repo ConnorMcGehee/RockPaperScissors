@@ -1,62 +1,69 @@
-// uses strict mode so strings are not coerced, variables are not hoisted, etc... 
-'use strict';
+let hand = 0;
+let rock = 0;
+let paper = 1;
+let scissors = 2;
 
-// brings in the assert module for unit testing
-const assert = require('assert');
-// brings in the readline module to access the command line
-const readline = require('readline');
-// use the readline module to print out to the command line
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-// the function that will be called by the unit test below
-const rockPaperScissors = (hand1, hand2) => {
-
-  // Write code here
-  // Use the unit test to see what is expected
-
+const $ = (id) => {
+  return document.getElementById(id);
 }
 
-// the first function called in the program to get an input from the user
-// to run the function use the command: node main.js
-// to close it ctrl + C
-function getPrompt() {
-  rl.question('hand1: ', (answer1) => {
-    rl.question('hand2: ', (answer2) => {
-      console.log( rockPaperScissors(answer1, answer2) );
-      getPrompt();
-    });
-  });
+let hand1Element = $("hand1");
+let hand2Element = $("hand2");
+let resultElement = $("result");
+
+const selectRock = () => {
+  hand = rock;
+  hand1Element.innerText = "You select: Rock";
+  clear();
+}
+const selectPaper = () => {
+  hand = paper;
+  hand1Element.innerText = "You select: Paper";
+  clear();
+}
+const selectScissors = () => {
+  hand = scissors;
+  hand1Element.innerText = "You select: Scissors";
+  clear();
+}
+const clear = () => {
+  hand2Element.innerText = "";
+  resultElement.innerText = "";
 }
 
-// Unit Tests
-// to use them run the command: npm test main.js
-// to close them ctrl + C
-if (typeof describe === 'function') {
+const go = () => {
 
-  // most are notes for human eyes to read, but essentially passes in inputs then compares if the function you built returns the expected output.
-  describe('#rockPaperScissors()', () => {
-    it('should detect a tie', () => {
-      assert.equal(rockPaperScissors('rock', 'rock'), "It's a tie!");
-      assert.equal(rockPaperScissors('paper', 'paper'), "It's a tie!");
-      assert.equal(rockPaperScissors('scissors', 'scissors'), "It's a tie!");
-    });
-    it('should detect which hand won', () => {
-      assert.equal(rockPaperScissors('rock', 'paper'), "Hand two wins!");
-      assert.equal(rockPaperScissors('paper', 'scissors'), "Hand two wins!");
-      assert.equal(rockPaperScissors('rock', 'scissors'), "Hand one wins!");
-    });
-    it('should scrub input to ensure lowercase with "trim"ed whitepace', () => {
-      assert.equal(rockPaperScissors('rOcK', ' paper '), "Hand two wins!");
-      assert.equal(rockPaperScissors('Paper', 'SCISSORS'), "Hand two wins!");
-      assert.equal(rockPaperScissors('rock ', 'sCiSsOrs'), "Hand one wins!");
-    });
-  });
-} else {
+  let cpuHand = Math.floor(Math.random() * 3);
+  let resultElement = $("result");
 
-  // always returns ask the user for another input
-  getPrompt();
+  switch (cpuHand) {
+    case 0: {
+      hand2Element.innerText = "CPU selected: Rock";
+      break;
+    }
+    case 1: {
+      hand2Element.innerText = "CPU selected: Paper";
+      break;
+    }
+    case 2: {
+      hand2Element.innerText = "CPU selected: Scissors";
+      break;
+    }
+  }
 
+  if (hand === cpuHand) {
+    resultElement.innerText = "It's a tie!";
+  }
+  else if (hand === 0 && cpuHand === 2) {
+    resultElement.innerText = "You win!";
+  }
+  else if (hand === 2 && cpuHand === 0) {
+    resultElement.innerText = "You lose!";
+  }
+  else if (hand > cpuHand) {
+    resultElement.innerText = "You win!";
+  }
+  else {
+    resultElement.innerText = "You lose!";
+  }
 }
